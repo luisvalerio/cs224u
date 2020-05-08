@@ -8,7 +8,38 @@ __author__ = "Christopher Potts"
 __version__ = "CS224u, Stanford, Spring 2020"
 
 
-TURN_BOUNDARY =  " ### "
+TURN_BOUNDARY = " ### "
+
+
+def draw_rgb_colors(rgbs, target_index=None):
+    """
+        Parameters
+            - rgbs: list of 3 colors, where each color is an RGB representation (list-like).
+            - target_index: integer from 0 to 2 inclusive. Adds a border around a specific square/box.
+    """
+    fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(3, 1))
+
+    for i, c in enumerate(rgbs):
+        ec = c if (i != target_index) else "black"
+        patch = mpatch.Rectangle((0, 0), 1, 1, color=c, ec=ec, lw=8)
+        axes[i].add_patch(patch)
+        axes[i].axis("off")
+
+
+def fft_color_to_rgb(fft_color):
+    import numpy.fft as fft
+
+    return fft.ifft(fft_color).real
+
+
+def draw_fft_colors(fft_colors, target_index=None):
+    """
+        Parameters
+            - fft_colors: list of 3 colors, where each color is a 3-dimension fft representation of a color.
+            - target_index: integer from 0 to 2 inclusive. Adds a border around a specific square/box.
+    """
+    rgbs = [fft_color_to_rgb(fft_color) for fft_color in fft_colors]
+    draw_rgb_colors(rgbs, target_index)
 
 
 class ColorsCorpusReader:
@@ -37,6 +68,7 @@ class ColorsCorpusReader:
         # ...
 
     """
+
     def __init__(self, src_filename, word_count=None, normalize_colors=True):
         self.src_filename = src_filename
         self.word_count = word_count
@@ -60,15 +92,15 @@ class ColorsCorpusReader:
         with open(self.src_filename) as f:
             reader = csv.DictReader(f)
             for row in reader:
-                if row['role'] == 'speaker' and self._word_count_filter(row):
-                    grouped[(row['gameid'], row['roundNum'])].append(row)
+                if row["role"] == "speaker" and self._word_count_filter(row):
+                    grouped[(row["gameid"], row["roundNum"])].append(row)
         for rows in grouped.values():
-            yield ColorsCorpusExample(
-                rows, normalize_colors=self.normalize_colors)
+            yield ColorsCorpusExample(rows, normalize_colors=self.normalize_colors)
 
     def _word_count_filter(self, row):
-        return self.word_count is None or \
-          row['contents'].count(" ") == (self.word_count-1)
+        return self.word_count is None or row["contents"].count(" ") == (
+            self.word_count - 1
+        )
 
 
 class ColorsCorpusExample:
@@ -100,28 +132,32 @@ class ColorsCorpusExample:
     in these additional attributes by subclassing this class.
 
     """
+
     def __init__(self, rows, normalize_colors=True):
         self.normalize_colors = normalize_colors
-        self.contents = TURN_BOUNDARY.join([r['contents'] for r in rows])
+        self.contents = TURN_BOUNDARY.join([r["contents"] for r in rows])
         # Make sure our assumptions about these rows are correct:
         self._check_row_alignment(rows)
         row = rows[0]
-        self.gameid = row['gameid']
-        self.roundNum = int(row['roundNum'])
-        self.condition = row['condition']
-        self.outcome = row['outcome'] == 'true'
-        self.clickStatus = row['clickStatus']
+        self.gameid = row["gameid"]
+        self.roundNum = int(row["roundNum"])
+        self.condition = row["condition"]
+        self.outcome = row["outcome"] == "true"
+        self.clickStatus = row["clickStatus"]
         self.color_data = []
-        for typ in ['click', 'alt1', 'alt2']:
-            self.color_data.append({
-                'type': typ,
-                'Status': row['{}Status'.format(typ)],
-                'rep': self._get_color_rep(row, typ),
-                'speaker': int(row['{}LocS'.format(typ)]),
-                'listener': int(row['{}LocL'.format(typ)])})
-        self.colors = self._get_reps_in_order('Status')
-        self.listener_context = self._get_reps_in_order('listener')
-        self.speaker_context = self._get_reps_in_order('speaker')
+        for typ in ["click", "alt1", "alt2"]:
+            self.color_data.append(
+                {
+                    "type": typ,
+                    "Status": row["{}Status".format(typ)],
+                    "rep": self._get_color_rep(row, typ),
+                    "speaker": int(row["{}LocS".format(typ)]),
+                    "listener": int(row["{}LocL".format(typ)]),
+                }
+            )
+        self.colors = self._get_reps_in_order("Status")
+        self.listener_context = self._get_reps_in_order("listener")
+        self.speaker_context = self._get_reps_in_order("speaker")
 
     def parse_turns(self):
         """"Turns the `contents` string into a list by splitting on
@@ -134,7 +170,7 @@ class ColorsCorpusExample:
         """
         return self.contents.split(TURN_BOUNDARY)
 
-    def display(self, typ='model'):
+    def display(self, typ="model"):
         """Prints examples to the screen in an intuitive format: the
         utterance text appears first, following by the three color
         patches, with the target identified by a black border in the
@@ -162,15 +198,15 @@ class ColorsCorpusExample:
 
         """
         print(self.contents)
-        if typ == 'model':
+        if typ == "model":
             colors = self.colors
             target_index = 2
-        elif typ == 'listener':
+        elif typ == "listener":
             colors = self.listener_context
             target_index = None
-        elif typ == 'speaker':
+        elif typ == "speaker":
             colors = self.speaker_context
-            target_index = self._get_target_index('speaker')
+            target_index = self._get_target_index("speaker")
         else:
             raise ValueError('`typ` options: "model", "listener", "speaker"')
 
@@ -179,14 +215,14 @@ class ColorsCorpusExample:
         fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(3, 1))
 
         for i, c in enumerate(rgbs):
-            ec = c if (i != target_index or typ == 'listener') else "black"
+            ec = c if (i != target_index or typ == "listener") else "black"
             patch = mpatch.Rectangle((0, 0), 1, 1, color=c, ec=ec, lw=8)
             axes[i].add_patch(patch)
-            axes[i].axis('off')
+            axes[i].axis("off")
 
     def _get_color_rep(self, row, typ):
         rep = []
-        for dim in ['H', 'L', 'S']:
+        for dim in ["H", "L", "S"]:
             colname = "{}Col{}".format(typ, dim)
             rep.append(float(row[colname]))
         if self.normalize_colors:
@@ -200,15 +236,15 @@ class ColorsCorpusExample:
 
     @staticmethod
     def _scale_color(h, l, s):
-        return [h/360, l/100, s/100]
+        return [h / 360, l / 100, s / 100]
 
     def _get_reps_in_order(self, field):
-        colors = [(d[field], d['rep']) for d in self.color_data]
+        colors = [(d[field], d["rep"]) for d in self.color_data]
         return [rep for s, rep in sorted(colors)]
 
     def _get_target_index(self, field):
         for d in self.color_data:
-            if d['Status'] == 'target':
+            if d["Status"] == "target":
                 return d[field] - 1
 
     @staticmethod
@@ -223,19 +259,26 @@ class ColorsCorpusExample:
             if set(row.keys()) != keys:
                 raise RuntimeError(
                     "The dicts in the `rows` argument to `ColorsCorpusExample` "
-                    "must have all the same keys.")
-        exempted = {'contents', 'msgTime',
-                    'numRawWords', 'numRawChars',
-                    'numCleanWords', 'numCleanChars'}
+                    "must have all the same keys."
+                )
+        exempted = {
+            "contents",
+            "msgTime",
+            "numRawWords",
+            "numRawChars",
+            "numCleanWords",
+            "numCleanChars",
+        }
         keys = keys - exempted
-        for row in rows[1: ]:
+        for row in rows[1:]:
             for key in keys:
                 if rows[0][key] != row[key]:
                     raise RuntimeError(
                         "The dicts in the `rows` argument to `ColorsCorpusExample` "
                         "must have all the same key values except for the keys "
                         "associated with the message. The key {} has values {} "
-                        "and {}".format(key, rows[0][key], row[key]))
+                        "and {}".format(key, rows[0][key], row[key])
+                    )
 
     def __str__(self):
         return self.contents
