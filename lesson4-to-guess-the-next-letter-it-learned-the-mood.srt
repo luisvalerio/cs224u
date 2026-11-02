@@ -1,0 +1,390 @@
+1
+00:00:01,200 --> 00:00:04,826
+This network reads product reviews
+one letter at a time.
+
+2
+00:00:04,826 --> 00:00:09,336
+It was trained to do one thing,
+and one thing only: guess the next letter.
+
+3
+00:00:09,636 --> 00:00:11,258
+Now watch one of its neurons
+
+4
+00:00:11,258 --> 00:00:13,527
+while it reads this customer review.
+
+5
+00:00:13,627 --> 00:00:15,328
+It climbs as the praise piles up,
+
+6
+00:00:15,328 --> 00:00:18,136
+and drops the moment the complaint begins.
+
+7
+00:00:18,386 --> 00:00:22,277
+Nobody told it what happy means.
+It never saw a star rating.
+
+8
+00:00:22,577 --> 00:00:25,358
+So why would a letter-guesser
+grow a mood detector?
+
+9
+00:00:28,458 --> 00:00:30,983
+What does the mood have to do
+with the next letter?
+
+10
+00:00:31,645 --> 00:00:34,051
+First, the game.
+The network reads a review,
+
+11
+00:00:34,051 --> 00:00:37,242
+and before each letter,
+it bets on what comes next.
+
+12
+00:00:37,342 --> 00:00:38,931
+Its first bets are spread out.
+
+13
+00:00:38,931 --> 00:00:40,933
+A few letters into the word “great”,
+
+14
+00:00:40,933 --> 00:00:42,171
+it's already sure.
+
+15
+00:00:42,321 --> 00:00:46,232
+Then it sees the real letter,
+gets nudged toward it, and moves on.
+
+16
+00:00:46,232 --> 00:00:48,644
+Each review is its own answer key.
+
+17
+00:00:48,794 --> 00:00:50,031
+That's the whole job.
+
+18
+00:00:50,031 --> 00:00:53,991
+No stars, no labels, nothing about mood.
+
+19
+00:00:54,091 --> 00:00:57,778
+In 2017, researchers at OpenAI played it
+
+20
+00:00:57,778 --> 00:01:00,493
+over 82 million Amazon reviews:
+
+21
+00:01:00,493 --> 00:01:03,294
+a month of guessing, one letter at a time.
+
+22
+00:01:03,794 --> 00:01:06,277
+Your turn: how does this review go on?
+
+23
+00:01:08,577 --> 00:01:11,269
+Not strong enough.
+That's what the network writes.
+
+24
+00:01:11,269 --> 00:01:15,498
+Change only the first sentence to:
+“Best thing I bought this year,”
+
+25
+00:01:15,498 --> 00:01:18,787
+and the same words go on: “a great price.”
+
+26
+00:01:18,937 --> 00:01:21,385
+The words right before the blank
+were the same.
+
+27
+00:01:21,385 --> 00:01:25,239
+Only the mood was different,
+and the mood picked the next letters.
+
+28
+00:01:25,539 --> 00:01:27,335
+It happens all through a review.
+
+29
+00:01:27,335 --> 00:01:31,994
+After “I would”, a happy review bets on r,
+for recommend.
+
+30
+00:01:31,994 --> 00:01:35,925
+An unhappy one bets on n, for not.
+
+31
+00:01:36,025 --> 00:01:37,677
+After “Overall I am very”:
+
+32
+00:01:37,677 --> 00:01:40,641
+h for happy, or d for disappointed.
+
+33
+00:01:40,891 --> 00:01:43,819
+The mood is set early
+and pays off again and again.
+
+34
+00:01:43,819 --> 00:01:47,064
+So every nudge that helped it
+keep track of the mood
+
+35
+00:01:47,064 --> 00:01:50,393
+made its guesses better,
+and those nudges added up.
+
+36
+00:01:50,593 --> 00:01:52,781
+Nobody asked for a mood detector.
+
+37
+00:01:52,781 --> 00:01:55,571
+Guessing the next letter well
+rewarded one.
+
+38
+00:01:56,371 --> 00:01:58,107
+So where does it keep the mood?
+
+39
+00:01:58,807 --> 00:02:00,464
+To guess well, it has to remember
+
+40
+00:02:00,464 --> 00:02:01,970
+what it has read so far.
+
+41
+00:02:01,970 --> 00:02:04,320
+So the researchers gave it a memory:
+
+42
+00:02:04,320 --> 00:02:07,783
+4,096 neurons, the size they chose.
+
+43
+00:02:07,783 --> 00:02:10,511
+After every letter, it updates them all.
+
+44
+00:02:10,661 --> 00:02:12,049
+That memory never grows,
+
+45
+00:02:12,049 --> 00:02:14,020
+however long the review gets,
+
+46
+00:02:14,020 --> 00:02:15,155
+so it can only keep
+
+47
+00:02:15,155 --> 00:02:16,645
+what helps the next guess.
+
+48
+00:02:16,895 --> 00:02:18,597
+After training, the researchers
+
+49
+00:02:18,597 --> 00:02:20,182
+showed it reviews they knew
+
+50
+00:02:20,182 --> 00:02:21,479
+were happy or unhappy,
+
+51
+00:02:21,479 --> 00:02:24,002
+and searched its memory for a neuron
+
+52
+00:02:24,002 --> 00:02:25,443
+that tracked the difference.
+
+53
+00:02:25,443 --> 00:02:28,338
+One neuron did, almost by itself.
+
+54
+00:02:28,538 --> 00:02:30,647
+Put a single bar on that neuron,
+
+55
+00:02:30,647 --> 00:02:31,817
+like in lesson 1,
+
+56
+00:02:31,817 --> 00:02:33,507
+and it sorts movie reviews
+
+57
+00:02:33,507 --> 00:02:37,186
+into good and bad, right 92 times in 100.
+
+58
+00:02:37,386 --> 00:02:38,427
+So let's call it
+
+59
+00:02:38,427 --> 00:02:40,139
+the mood detection neuron.
+
+60
+00:02:40,139 --> 00:02:42,778
+Researchers call it the sentiment neuron.
+
+61
+00:02:42,778 --> 00:02:44,989
+Nobody wired it, and its training
+
+62
+00:02:44,989 --> 00:02:46,986
+never used a single label.
+
+63
+00:02:46,986 --> 00:02:49,639
+It grew on its own, from guessing letters.
+
+64
+00:02:50,139 --> 00:02:53,406
+“I really love this blender”: up,
+as you'd expect.
+
+65
+00:02:53,406 --> 00:02:56,682
+Your turn:
+“I really wanted to love this blender.”
+
+66
+00:02:56,682 --> 00:02:58,369
+Which way does it move?
+
+67
+00:03:00,669 --> 00:03:03,644
+Down. It reads the whole phrase,
+not just the word.
+
+68
+00:03:03,644 --> 00:03:07,717
+A bag of words would have counted
+“love” as a vote for happy.
+
+69
+00:03:08,417 --> 00:03:10,259
+Does the network really use it?
+
+70
+00:03:10,959 --> 00:03:13,216
+Here's the test:
+keep every letter the same,
+
+71
+00:03:13,216 --> 00:03:15,597
+and turn only this one neuron.
+
+72
+00:03:15,747 --> 00:03:19,730
+After “I would”:
+turned to happy, it bets r.
+
+73
+00:03:19,730 --> 00:03:22,571
+Turned to unhappy, it bets n.
+
+74
+00:03:22,821 --> 00:03:25,262
+Let it write, and a whole review follows.
+
+75
+00:03:25,262 --> 00:03:30,857
+Happy: “This blender is sturdy, well made
+and works exactly as advertised.”
+
+76
+00:03:30,857 --> 00:03:35,469
+Unhappy: “This blender was defective
+and did not work properly.”
+
+77
+00:03:35,669 --> 00:03:40,589
+Same network, same first words.
+One neuron, turned.
+
+78
+00:03:41,489 --> 00:03:43,397
+Four lessons, one idea:
+
+79
+00:03:43,397 --> 00:03:46,275
+a network that has to describe a lot
+with a little
+
+80
+00:03:46,275 --> 00:03:48,155
+is forced to find what matters.
+
+81
+00:03:48,305 --> 00:03:50,422
+With labels, it found rules.
+
+82
+00:03:50,422 --> 00:03:53,303
+Filling in blanks, it found word profiles.
+
+83
+00:03:53,303 --> 00:03:57,025
+Asked only to guess the next letter,
+it found the mood.
+
+84
+00:03:57,925 --> 00:04:01,965
+And this network
+had just 4,096 memory neurons.
+
+85
+00:04:02,115 --> 00:04:05,923
+Scale networks up,
+with far more neurons and far more text,
+
+86
+00:04:05,923 --> 00:04:08,241
+and they have room to invent far more:
+
+87
+00:04:08,241 --> 00:04:11,170
+concepts of every kind, and even circuits:
+
+88
+00:04:11,170 --> 00:04:14,013
+groups of neurons that work
+like little functions
+
+89
+00:04:14,013 --> 00:04:15,886
+and chain steps of reasoning.
+
+90
+00:04:16,136 --> 00:04:18,363
+We'll open those up in another series.

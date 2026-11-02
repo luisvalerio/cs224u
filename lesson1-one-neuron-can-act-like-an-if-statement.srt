@@ -1,0 +1,313 @@
+1
+00:00:01,300 --> 00:00:05,696
+Every language model is built from
+millions of tiny parts called neurons,
+
+2
+00:00:05,696 --> 00:00:07,409
+each with its own settings.
+
+3
+00:00:07,609 --> 00:00:09,175
+Let's zoom in on one.
+
+4
+00:00:10,525 --> 00:00:13,112
+In about three minutes,
+you'll read it like code,
+
+5
+00:00:13,162 --> 00:00:15,088
+break it with a rule it can't write,
+
+6
+00:00:15,138 --> 00:00:18,751
+and watch a second neuron fix it
+by inventing a concept.
+
+7
+00:00:22,362 --> 00:00:24,034
+What's inside a neuron?
+
+8
+00:00:24,834 --> 00:00:29,816
+In this example, the neuron
+looks for two words: python, and pandas.
+
+9
+00:00:29,966 --> 00:00:34,027
+Python is there, so its input is 1.
+Pandas isn't: 0.
+
+10
+00:00:34,127 --> 00:00:36,418
+With weights of 1, the total is 1.
+
+11
+00:00:36,518 --> 00:00:42,206
+It fires only if that clears the bar: 1.5.
+It doesn't: silent.
+
+12
+00:00:42,406 --> 00:00:44,861
+Your turn. Which sentences make it fire?
+
+13
+00:00:44,861 --> 00:00:47,238
+Either word, or only both?
+
+14
+00:00:49,338 --> 00:00:54,298
+Only both. One word alone scores 1,
+so it takes both to clear the bar.
+
+15
+00:00:54,498 --> 00:00:58,219
+Put all four cases on a square,
+and the bar becomes a line:
+
+16
+00:00:58,219 --> 00:00:59,906
+corners past it fire.
+
+17
+00:01:00,406 --> 00:01:03,635
+Read the neuron back as code,
+and it's an if-statement.
+
+18
+00:01:03,785 --> 00:01:08,875
+When python and pandas show up together,
+it usually means the topic is software.
+
+19
+00:01:08,875 --> 00:01:12,479
+So let's call it
+the software-topic detection neuron.
+
+20
+00:01:12,479 --> 00:01:13,500
+Remember it.
+
+21
+00:01:14,443 --> 00:01:17,161
+Here's the twist: that line is the neuron.
+
+22
+00:01:17,261 --> 00:01:21,002
+Tilt it, and the weights change.
+Slide it, and the bar moves.
+
+23
+00:01:21,102 --> 00:01:24,353
+Whatever you do,
+one neuron makes one straight cut.
+
+24
+00:01:25,203 --> 00:01:28,814
+One number can change the rule.
+Lower the bar to 0.5,
+
+25
+00:01:28,864 --> 00:01:31,859
+and one word is enough:
+it becomes an OR gate.
+
+26
+00:01:32,009 --> 00:01:35,914
+Flip the pandas weight to −1,
+and pandas counts against it:
+
+27
+00:01:35,914 --> 00:01:38,099
+python, and not pandas.
+
+28
+00:01:38,249 --> 00:01:40,648
+The bar sets how much evidence is enough;
+
+29
+00:01:40,648 --> 00:01:43,401
+a weight's sign sets
+which side a word is on.
+
+30
+00:01:44,241 --> 00:01:46,147
+So what can't one neuron do?
+
+31
+00:01:46,847 --> 00:01:50,077
+Here's a rule worth having:
+an animal detector.
+
+32
+00:01:50,177 --> 00:01:52,597
+Python alone is probably the snake;
+
+33
+00:01:52,597 --> 00:01:57,619
+pandas alone, the bears;
+both together, software.
+
+34
+00:01:57,719 --> 00:02:00,951
+Fire for either word alone,
+stay silent otherwise.
+
+35
+00:02:00,951 --> 00:02:02,487
+Where does the line go?
+
+36
+00:02:03,111 --> 00:02:09,447
+Here? 3 of 4. Here? 3. Here? Still 3.
+
+37
+00:02:09,697 --> 00:02:10,624
+No line works.
+
+38
+00:02:10,624 --> 00:02:14,973
+If each word alone clears the bar,
+both together clear it even more,
+
+39
+00:02:15,023 --> 00:02:17,530
+and the neuron calls software an animal.
+
+40
+00:02:17,530 --> 00:02:20,727
+One neuron can't say:
+either, but not both.
+
+41
+00:02:21,654 --> 00:02:23,198
+So how do you fix it?
+
+42
+00:02:23,898 --> 00:02:26,260
+The fix is a neuron you've already met:
+
+43
+00:02:26,260 --> 00:02:29,431
+the software-topic neuron,
+hidden in the middle.
+
+44
+00:02:29,581 --> 00:02:31,660
+The answer adds each word at +1,
+
+45
+00:02:31,660 --> 00:02:34,752
+and the software-topic neuron at −2.
+
+46
+00:02:34,902 --> 00:02:38,923
+Prediction: both words go in.
+What does the answer say?
+
+47
+00:02:40,923 --> 00:02:44,229
+One word:
+the software-topic neuron stays quiet,
+
+48
+00:02:44,229 --> 00:02:46,414
+and the answer gets 1. Animal.
+
+49
+00:02:46,514 --> 00:02:49,683
+Both: the software-topic neuron fires,
+
+50
+00:02:49,683 --> 00:02:53,674
+and its −2 cancels them. 0: not an animal.
+
+51
+00:02:53,874 --> 00:02:56,540
+Each neuron still makes one straight cut.
+
+52
+00:02:56,540 --> 00:02:59,748
+Together,
+they fence off just the animal corners.
+
+53
+00:02:59,898 --> 00:03:02,764
+The answer couldn't see
+the software topic on its own.
+
+54
+00:03:02,764 --> 00:03:05,965
+The hidden neuron invented
+that concept for it.
+
+55
+00:03:06,115 --> 00:03:10,112
+That's what hidden layers do:
+they build the concepts the answer needs.
+
+56
+00:03:11,145 --> 00:03:13,908
+With two words,
+there are 16 possible rules.
+
+57
+00:03:13,908 --> 00:03:16,551
+One neuron can draw 14 of them.
+
+58
+00:03:16,851 --> 00:03:20,549
+Only the animal rule and its opposite
+need a hidden neuron.
+
+59
+00:03:20,699 --> 00:03:23,169
+Give each yes case its own hidden neuron,
+
+60
+00:03:23,169 --> 00:03:26,726
+and a network can write any rule
+about which words appear:
+
+61
+00:03:26,726 --> 00:03:30,585
+the idea behind
+the universal approximation theorem.
+
+62
+00:03:31,435 --> 00:03:33,943
+The catch: that recipe is a lookup table.
+
+63
+00:03:33,943 --> 00:03:37,949
+It only knows the cases it lists,
+so it can't generalize.
+
+64
+00:03:38,049 --> 00:03:41,960
+And every new word doubles them.
+30 words: about a billion.
+
+65
+00:03:41,960 --> 00:03:46,271
+300: more than the atoms
+in the observable universe.
+
+66
+00:03:48,271 --> 00:03:52,930
+In 1969, Minsky and Papert made
+the one-neuron limit famous,
+
+67
+00:03:52,930 --> 00:03:56,620
+and there was no practical way
+to train hidden neurons.
+
+68
+00:03:56,820 --> 00:03:58,202
+So who writes the weights?
+
+69
+00:03:58,202 --> 00:04:01,265
+Next, a network learns them from examples.

@@ -1,0 +1,322 @@
+1
+00:00:01,100 --> 00:00:03,604
+This network has never seen this sentence.
+
+2
+00:00:03,904 --> 00:00:07,468
+Pandas: the bear, or the Python library?
+
+3
+00:00:07,468 --> 00:00:11,213
+Nobody told it which.
+Yet it's almost certain: animal.
+
+4
+00:00:11,613 --> 00:00:15,163
+Stranger still:
+the word pandas barely matters to it.
+
+5
+00:00:15,463 --> 00:00:17,775
+By the end, you'll know exactly why.
+
+6
+00:00:20,875 --> 00:00:22,888
+What does a network actually read?
+
+7
+00:00:23,688 --> 00:00:29,437
+Last time, a neuron asked two questions:
+is python in the sentence? Is pandas?
+
+8
+00:00:29,537 --> 00:00:32,433
+Real language needs a question
+for every word
+
+9
+00:00:32,433 --> 00:00:34,964
+in its dictionary: say 50,000.
+
+10
+00:00:35,764 --> 00:00:39,748
+One thing we can do is put the sentence
+into a bag and shake it.
+
+11
+00:00:39,748 --> 00:00:43,559
+The order is gone;
+only which words are inside remains.
+
+12
+00:00:43,709 --> 00:00:45,739
+Mark those words in the dictionary,
+
+13
+00:00:45,739 --> 00:00:47,287
+where every tick is one word,
+
+14
+00:00:47,287 --> 00:00:49,071
+and that's a bag of words.
+
+15
+00:00:49,771 --> 00:00:52,130
+A neuron reads the bag like a vote.
+
+16
+00:00:52,130 --> 00:00:54,316
+For now, we set the votes by hand:
+
+17
+00:00:54,316 --> 00:00:56,714
+snake votes strongly for animal,
+
+18
+00:00:56,714 --> 00:01:01,201
+import votes against,
+and the word "the" barely votes.
+
+19
+00:01:01,301 --> 00:01:03,556
+Words not in the bag stay quiet.
+
+20
+00:01:03,556 --> 00:01:06,578
+If the votes clear the bar,
+it fires: animal.
+
+21
+00:01:07,310 --> 00:01:09,238
+So what can you build out of votes?
+
+22
+00:01:09,938 --> 00:01:13,061
+Votes and a bar make a tiny
+programming language.
+
+23
+00:01:13,211 --> 00:01:17,509
+Low bar: any animal word fires it.
+That's the OR gate.
+
+24
+00:01:17,659 --> 00:01:21,873
+High bar: it needs python and pandas.
+That's the AND gate.
+
+25
+00:01:22,573 --> 00:01:24,863
+A vote against gives you the NOT gate.
+
+26
+00:01:25,013 --> 00:01:28,248
+Chain them,
+like last lesson's software-topic neuron,
+
+27
+00:01:28,248 --> 00:01:31,534
+and you have OR, AND, NOT gates:
+
+28
+00:01:31,534 --> 00:01:33,691
+what every computer is built from.
+
+29
+00:01:33,791 --> 00:01:37,169
+So neurons can write any rule
+about which words appear.
+
+30
+00:01:37,469 --> 00:01:40,110
+And one recipe always works: a list.
+
+31
+00:01:40,110 --> 00:01:42,418
+One neuron per sentence you've seen,
+
+32
+00:01:42,418 --> 00:01:45,243
+each saying yes to exactly that bag.
+
+33
+00:01:45,393 --> 00:01:48,814
+Your turn: a new sentence arrives.
+What does the list say?
+
+34
+00:01:51,114 --> 00:01:53,853
+Nothing.
+A list only knows what it has seen.
+
+35
+00:01:54,253 --> 00:01:56,154
+And a row for every possible bag?
+
+36
+00:01:56,154 --> 00:01:59,018
+Just writing down
+how many fills this wall.
+
+37
+00:01:59,746 --> 00:02:02,698
+Then how does it handle
+a sentence it's never seen?
+
+38
+00:02:03,398 --> 00:02:06,755
+By storing a vote per word,
+not an answer per sentence.
+
+39
+00:02:06,905 --> 00:02:10,156
+Watch the reach.
+A list row covers one sentence.
+
+40
+00:02:10,256 --> 00:02:12,898
+Take a word rule: "zoo votes animal".
+
+41
+00:02:12,898 --> 00:02:14,986
+It covers every sentence with zoo,
+
+42
+00:02:14,986 --> 00:02:16,999
+even ones it has never seen.
+
+43
+00:02:16,999 --> 00:02:19,162
+Rules are cheaper than lists.
+
+44
+00:02:20,162 --> 00:02:21,406
+So who sets the votes?
+
+45
+00:02:21,406 --> 00:02:24,458
+A network can do it from labeled examples.
+
+46
+00:02:24,608 --> 00:02:29,415
+Let's look at one example it gets wrong
+during training: a snake hid in the woods.
+
+47
+00:02:29,415 --> 00:02:31,934
+It should say animal, but it isn't sure.
+
+48
+00:02:32,034 --> 00:02:34,824
+To fix it, the words in this sentence
+get the blame:
+
+49
+00:02:34,824 --> 00:02:38,143
+each one's vote is nudged a little
+toward animal.
+
+50
+00:02:38,543 --> 00:02:40,116
+Repeat thousands of times.
+
+51
+00:02:40,116 --> 00:02:43,115
+Every nudge to zoo helps
+every sentence with zoo,
+
+52
+00:02:43,115 --> 00:02:46,274
+so the votes harden
+into rules on their own.
+
+53
+00:02:46,424 --> 00:02:49,926
+Animal words vote animal,
+software words vote software,
+
+54
+00:02:49,926 --> 00:02:54,736
+and words that show up everywhere,
+like "the", barely vote.
+
+55
+00:02:54,936 --> 00:02:57,947
+Your turn:
+pandas shows up in animal sentences
+
+56
+00:02:57,947 --> 00:03:01,792
+and software sentences alike.
+What happens to its vote?
+
+57
+00:03:04,092 --> 00:03:06,386
+It cancels out.
+Each side pulls it back,
+
+58
+00:03:06,386 --> 00:03:08,601
+so the words around it decide.
+
+59
+00:03:09,216 --> 00:03:13,163
+Add two hidden neurons,
+and blame flows back to them too:
+
+60
+00:03:13,163 --> 00:03:17,669
+that's backpropagation,
+the piece missing in 1969.
+
+61
+00:03:17,669 --> 00:03:20,898
+Here, one learns animal words,
+and the other becomes
+
+62
+00:03:20,898 --> 00:03:24,126
+a software-topic neuron,
+like last lesson's.
+
+63
+00:03:24,126 --> 00:03:26,379
+This time, nobody wired it.
+
+64
+00:03:26,579 --> 00:03:31,856
+The last neuron just weighs their votes:
+animal votes yes, software votes no.
+
+65
+00:03:32,156 --> 00:03:33,978
+Now: the pandas escaped the zoo.
+
+66
+00:03:33,978 --> 00:03:37,819
+Zoo and escaped bring votes learned
+from other sentences,
+
+67
+00:03:37,819 --> 00:03:40,295
+and pandas cancels out: animal.
+
+68
+00:03:41,795 --> 00:03:46,475
+Each word's two votes are its profile:
+how much it leans toward each concept.
+
+69
+00:03:46,625 --> 00:03:50,469
+Tiger and owl never shared a sentence,
+yet their profiles match.
+
+70
+00:03:50,469 --> 00:03:54,694
+Next, a closer look at word profiles:
+how they work in practice,
+
+71
+00:03:54,694 --> 00:03:59,220
+and why they're far more powerful
+than the simple version we built here.

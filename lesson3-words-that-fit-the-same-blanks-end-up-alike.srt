@@ -1,0 +1,401 @@
+1
+00:00:01,000 --> 00:00:03,264
+So far, a word was just a slot:
+
+2
+00:00:03,264 --> 00:00:06,064
+one entry in a list of 50,000.
+
+3
+00:00:06,314 --> 00:00:08,691
+The slot only marks which word it is:
+
+4
+00:00:08,691 --> 00:00:12,063
+nothing in tiger's slot says
+it's an animal, like owl.
+
+5
+00:00:12,363 --> 00:00:14,752
+So the field gave every word a profile:
+
+6
+00:00:14,752 --> 00:00:17,240
+scores on a few traits, like how much
+
+7
+00:00:17,240 --> 00:00:19,710
+it's about software, or about animals.
+
+8
+00:00:19,860 --> 00:00:21,703
+Each bar is just a number.
+
+9
+00:00:21,903 --> 00:00:23,428
+And those numbers are weights,
+
+10
+00:00:23,428 --> 00:00:25,623
+like the votes from last lesson.
+
+11
+00:00:25,823 --> 00:00:28,176
+In real models, nobody writes them,
+
+12
+00:00:28,176 --> 00:00:29,743
+or even picks the traits.
+
+13
+00:00:29,743 --> 00:00:32,059
+They start out random, and the network
+
+14
+00:00:32,059 --> 00:00:34,471
+learns them by itself, from text.
+
+15
+00:00:34,721 --> 00:00:36,156
+That learned row of numbers
+
+16
+00:00:36,156 --> 00:00:38,057
+is called the word's embedding.
+
+17
+00:00:41,484 --> 00:00:43,247
+Here's a map of these embeddings,
+
+18
+00:00:43,247 --> 00:00:46,241
+from a network
+nobody told what words mean.
+
+19
+00:00:46,241 --> 00:00:48,404
+No labels, no definitions.
+
+20
+00:00:48,604 --> 00:00:51,898
+It only ever played one game:
+guess the missing word.
+
+21
+00:00:52,198 --> 00:00:54,957
+Yet tiger and owl ended up side by side,
+
+22
+00:00:54,957 --> 00:00:58,115
+even if they never appeared
+in the same sentence.
+
+23
+00:00:58,415 --> 00:01:01,500
+By the end, you'll know
+how a guessing game builds this map,
+
+24
+00:01:01,500 --> 00:01:03,138
+and what the map buys you.
+
+25
+00:01:06,288 --> 00:01:08,109
+What is a word, to a network?
+
+26
+00:01:08,909 --> 00:01:11,251
+Last time, every word cast two votes:
+
+27
+00:01:11,251 --> 00:01:12,995
+one for the animal neuron,
+
+28
+00:01:12,995 --> 00:01:15,018
+and one for the software neuron.
+
+29
+00:01:15,018 --> 00:01:19,867
+Not just yes or no: each vote
+has a strength, called its weight.
+
+30
+00:01:19,967 --> 00:01:22,021
+Those two weights are just two numbers,
+
+31
+00:01:22,071 --> 00:01:24,468
+so we can plot every embedding on a map.
+
+32
+00:01:24,618 --> 00:01:30,621
+Words that act alike sit close together:
+tiger next to owl, csv far across the map.
+
+33
+00:01:30,821 --> 00:01:33,877
+That's an embedding:
+a profile of numbers for each word.
+
+34
+00:01:33,877 --> 00:01:37,143
+It's just each word's votes
+for the first neurons.
+
+35
+00:01:37,443 --> 00:01:39,952
+But lesson 2 drew this map from labels:
+
+36
+00:01:39,952 --> 00:01:42,830
+we told it which sentences
+were about animals.
+
+37
+00:01:42,830 --> 00:01:45,003
+Real text has no labels.
+
+38
+00:01:45,810 --> 00:01:46,874
+So without labels,
+
+39
+00:01:46,874 --> 00:01:48,890
+where do the profiles come from?
+
+40
+00:01:49,590 --> 00:01:51,133
+The field's big discovery:
+
+41
+00:01:51,133 --> 00:01:52,848
+text can label itself.
+
+42
+00:01:52,848 --> 00:01:54,991
+Hide a word, and have the network
+
+43
+00:01:54,991 --> 00:01:56,420
+guess it from its neighbors.
+
+44
+00:01:56,420 --> 00:01:57,992
+The hidden word is the answer,
+
+45
+00:01:57,992 --> 00:02:00,435
+so any text becomes a lesson.
+
+46
+00:02:00,585 --> 00:02:03,651
+The neighbors' profiles point
+to a spot on the map,
+
+47
+00:02:03,651 --> 00:02:05,853
+and the guess is the word closest to it.
+
+48
+00:02:05,853 --> 00:02:10,465
+On a wrong guess, backpropagation pulls
+the right word toward that spot,
+
+49
+00:02:10,465 --> 00:02:12,348
+like the votes last time.
+
+50
+00:02:12,548 --> 00:02:15,712
+Here's the trick.
+Tiger and owl never share a sentence.
+
+51
+00:02:15,712 --> 00:02:17,825
+But they fill the same blanks.
+
+52
+00:02:18,329 --> 00:02:20,405
+The words start scattered at random.
+
+53
+00:02:20,405 --> 00:02:22,020
+After thousands of rounds,
+
+54
+00:02:22,020 --> 00:02:24,567
+owl ends up right next to tiger.
+
+55
+00:02:24,767 --> 00:02:28,641
+Same blanks, same nudges, same place.
+
+56
+00:02:29,641 --> 00:02:31,606
+Each word gets only two numbers,
+
+57
+00:02:31,606 --> 00:02:34,640
+so it can't keep a private answer
+for every blank.
+
+58
+00:02:34,640 --> 00:02:37,457
+Words that fill the same blanks
+have to share.
+
+59
+00:02:37,607 --> 00:02:40,543
+A linguist put it this way in 1957:
+
+60
+00:02:40,543 --> 00:02:43,333
+“You shall know a word
+by the company it keeps.”
+
+61
+00:02:43,633 --> 00:02:46,095
+And notice: the map's sides have no names.
+
+62
+00:02:46,095 --> 00:02:50,150
+Nobody named the traits;
+only the neighborhoods mean something.
+
+63
+00:02:50,957 --> 00:02:52,650
+So what do you get for it?
+
+64
+00:02:53,350 --> 00:02:58,606
+Teach it a task with just two labels:
+tiger is an animal, csv is software.
+
+65
+00:02:58,706 --> 00:03:01,175
+One neuron reads each word's profile,
+
+66
+00:03:01,175 --> 00:03:05,327
+and one neuron makes one straight cut:
+a line across the map.
+
+67
+00:03:05,477 --> 00:03:08,248
+Your turn:
+it was only taught tiger and csv.
+
+68
+00:03:08,248 --> 00:03:10,115
+What does it say about owl?
+
+69
+00:03:12,415 --> 00:03:15,023
+Animal.
+Owl sits on tiger's side of the line,
+
+70
+00:03:15,023 --> 00:03:17,287
+and so does every animal near it.
+
+71
+00:03:17,437 --> 00:03:19,993
+Last lesson, a rule was a vote per word.
+
+72
+00:03:19,993 --> 00:03:22,230
+Now a rule is a cut through the map:
+
+73
+00:03:22,230 --> 00:03:25,466
+teach one word,
+and its whole neighborhood learns.
+
+74
+00:03:25,666 --> 00:03:29,453
+That's why language models first
+read mountains of raw text.
+
+75
+00:03:29,453 --> 00:03:33,909
+The guessing game builds the map;
+then a few examples go a long way.
+
+76
+00:03:34,609 --> 00:03:36,660
+Our map has two numbers per word.
+
+77
+00:03:36,660 --> 00:03:42,510
+Real models use hundreds, even thousands,
+because words differ in many ways at once.
+
+78
+00:03:42,660 --> 00:03:45,506
+You can't draw that map,
+but closeness still works.
+
+79
+00:03:45,506 --> 00:03:48,125
+In real profiles with 100 numbers,
+
+80
+00:03:48,125 --> 00:03:51,436
+Tuesday and Wednesday
+line up almost perfectly.
+
+81
+00:03:51,586 --> 00:03:54,657
+Tuesday's nearest neighbors
+are the other weekdays.
+
+82
+00:03:54,657 --> 00:03:58,530
+Tiger's are tigers, leopard,
+elephant, and woods.
+
+83
+00:03:59,361 --> 00:04:00,481
+That woods is a clue.
+
+84
+00:04:00,481 --> 00:04:02,087
+Each word gets one place,
+
+85
+00:04:02,087 --> 00:04:05,470
+so a word with two meanings
+gets stuck in between.
+
+86
+00:04:05,620 --> 00:04:08,510
+Our pandas fills zoo blanks
+and software blanks,
+
+87
+00:04:08,510 --> 00:04:10,770
+and lands between the two neighborhoods.
+
+88
+00:04:10,770 --> 00:04:13,893
+Real profiles do it too:
+python sits next to
+
+89
+00:04:13,893 --> 00:04:17,383
+monty and cleese,
+and next to php and perl.
+
+90
+00:04:17,583 --> 00:04:19,918
+The words around it still have to decide.
+
+91
+00:04:19,918 --> 00:04:22,285
+Next: a neuron nobody asked for.
+
+92
+00:04:22,285 --> 00:04:26,508
+How can a model come up
+with complex concepts on its own?
