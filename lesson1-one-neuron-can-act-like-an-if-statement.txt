@@ -1,0 +1,19 @@
+Lesson 1 · One neuron can act like an if-statement
+
+Every language model is built from millions of tiny neurons, each with its own settings. Let's zoom in on one. In about three minutes, you'll read it like code, break it with a rule it can't write, and watch a second neuron fix it by inventing a concept.
+
+What's inside a neuron? In this example, the neuron looks for two words: python, and pandas. Python is there, so its input is 1. Pandas isn't: 0. With weights of 1, the total is 1. It fires only if that clears the bar: 1.5. It doesn't: silent. Your turn. Which sentences make it fire? Either word, or only both? Only both. One word alone scores 1, so it takes both to clear the bar. Put all four cases on a square, and the bar becomes a line: corners past it fire. Read the neuron back as code, and it's an if-statement. When python and pandas show up together, it usually means the topic is software. So let's call it the software-topic detection neuron. Remember it.
+
+Here's the twist: that line is the neuron. Tilt it, and the weights change. Slide it, and the bar moves. Whatever you do, one neuron makes one straight cut.
+
+One number can change the rule. Lower the bar to 0.5, and one word is enough: it becomes an OR gate. Flip the pandas weight to −1, and pandas counts against it: python, and not pandas. The bar sets how much evidence is enough; a weight's sign sets which side a word is on.
+
+So what can't one neuron do? Here's a rule worth having: an animal detector. Python alone is probably the snake; pandas alone, the bears; both together, software. Fire for either word alone, stay silent otherwise. Where does the line go? Here? 3 of 4. Here? 3. Here? Still 3. No line works. If each word alone clears the bar, both together clear it even more, and the neuron calls software an animal. One neuron can't say: either, but not both.
+
+So how do you fix it? The fix is a neuron you've already met: the software-topic neuron, hidden in the middle. The answer adds each word at +1, and the software-topic neuron at −2. Prediction: both words go in. What does the answer say? One word: the software-topic neuron stays quiet, and the answer gets 1. Animal. Both: the software-topic neuron fires, and its −2 cancels them. 0: not an animal. Each neuron still makes one straight cut. Together, they fence off just the animal corners. The answer couldn't see the software topic on its own. The hidden neuron invented that concept for it. That's what hidden layers do: they build the concepts the answer needs.
+
+With two words, there are 16 possible rules. One neuron can draw 14 of them. Only the animal rule and its opposite need a hidden neuron. Give each yes case its own hidden neuron, and a network can write any rule about which words appear: the idea behind the universal approximation theorem.
+
+The catch: that recipe is a lookup table. It only knows the cases it lists, so it can't generalize. And every new word doubles them. 30 words: about a billion. 300: more than the atoms in the observable universe.
+
+In 1969, Minsky and Papert made the one-neuron limit famous, and there was no practical way to train hidden neurons. So who writes the weights? Next, a network learns them from examples.
